@@ -66,7 +66,9 @@ parse_dom () {
 	  if [[ $lbls != "BORA Requirements: " ]] ; then
       desc=$(echo "$desc$lbls" | sed 's/,\+$//' )
     fi
-	  #echo -e "Description:\n$desc"
+    #echo -e "Description:\n$desc"
+    #Reset requirements string at the end of the description
+    lbls="BORA Requirements: "
     arcyon task-update --uri $PHAB --user $USER --cert $CERT $TID --description "$(echo -e $desc)"
   fi
 }
