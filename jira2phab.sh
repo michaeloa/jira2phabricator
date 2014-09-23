@@ -38,7 +38,7 @@ parse_dom () {
   if [[ $TAG_NAME = "title" ]] ; then
     eval local $ATTRIBUTES
     #echo "Title: $CONTENT"
-    ID=`arcyon task-create --uri $PHAB --user $USER --cert $CERT --projects "$PROJ" --format-id "$CONTENT"`
+   TID=`arcyon task-create --uri $PHAB --user $USER --cert $CERT --projects "$PROJ" --format-id "$CONTENT"`
     echo $TID
   elif [[ $TAG_NAME = "description" ]] ; then
     eval local $ATTRIBUTES
