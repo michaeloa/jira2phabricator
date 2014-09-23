@@ -10,3 +10,8 @@ It takes an XML file, as exported from Jira, and puts the contents into Phabrica
 Usage:
 
   cat jira.xml | jira2phab.sh
+
+Known issues:
+
+- apostrophe &apos; should be converted in title and description/comments.
+- Doesn't work with æ, ø, å
