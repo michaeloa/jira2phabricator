@@ -20,6 +20,8 @@
 #!/bin/bash
 
 CERT="ENTER-CONDUIT-CERTIFICATE"
+PHAB="ENTER-PHAB-URL"
+USER="ENTER-USER-NAME"
 PROJ="ENTER-PROJECT-NAME"
 lbls="BORA Requirements: "
 
@@ -36,7 +38,7 @@ parse_dom () {
   if [[ $TAG_NAME = "title" ]] ; then
     eval local $ATTRIBUTES
     #echo "Title: $CONTENT"
-    ID=`arcyon task-create --uri http://phab0.met.no --user michaeloa --cert $CERT --projects "$PROJ" --format-id "$CONTENT"`
+    ID=`arcyon task-create --uri $PHAB --user $USER --cert $CERT --projects "$PROJ" --format-id "$CONTENT"`
     echo $TID
   elif [[ $TAG_NAME = "description" ]] ; then
     eval local $ATTRIBUTES
@@ -59,13 +61,13 @@ parse_dom () {
     ENTRY="On $created, @$author wrote:\n\n$CONTENT"
     com=$(echo $ENTRY | sed 's/&lt;br\/&gt;/\\n/g' | sed 's/&lt;\/p&gt;/\\n\\n/g' | sed 's/&lt;p&gt;//g' | sed 's/&lt;[^>]\+&quot;&gt;//g' | sed 's/&lt;\/a&gt;//g' | sed 's/&apos;/\"/g' )
     #echo -e $com
-    arcyon task-update --uri http://phab0.met.no --user michaeloa --cert $CERT $TID --comment "$(echo -e $com)"
+    arcyon task-update --uri $PHAB --user $USER --cert $CERT $TID --comment "$(echo -e $com)"
   elif [[ $TAG_NAME = "/item" ]] ; then
 	  if [[ $lbls != "BORA Requirements: " ]] ; then
       desc=$(echo "$desc$lbls" | sed 's/,\+$//' )
     fi
 	  #echo -e "Description:\n$desc"
-    arcyon task-update --uri http://phab0.met.no --user michaeloa --cert $CERT $TID --description "$(echo -e $desc)"
+    arcyon task-update --uri $PHAB --user $USER --cert $CERT $TID --description "$(echo -e $desc)"
   fi
 }
 
